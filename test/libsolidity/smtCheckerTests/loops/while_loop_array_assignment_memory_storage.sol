@@ -2,13 +2,19 @@ pragma experimental SMTChecker;
 
 contract LoopFor2 {
 	uint[] a;
-
+	function p() public {
+		a.push();
+	}
 	function testUnboundedForLoop(uint n, uint[] memory b, uint[] memory c) public {
+		require(n < a.length);
+		require(n < b.length);
+		require(n < c.length);
 		b[0] = 900;
 		a = b;
 		require(n > 0 && n < 100);
 		uint i;
 		while (i < n) {
+			// Accesses are safe but oob is reported due to potential aliasing after c's assignment.
 			b[i] = i + 1;
 			c[i] = b[i];
 			++i;
@@ -25,3 +31,7 @@ contract LoopFor2 {
 // ====
 // SMTSolvers: z3
 // ----
+// Warning 6368: (434-438): CHC: Out of bounds access happens here.
+// Warning 6368: (451-455): CHC: Out of bounds access happens here.
+// Warning 1218: (458-462): CHC: Error trying to invoke SMT solver.
+// Warning 6368: (458-462): CHC: Out of bounds access might happen here.
