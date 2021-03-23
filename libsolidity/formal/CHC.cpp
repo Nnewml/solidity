@@ -783,6 +783,24 @@ void CHC::makeArrayPopVerificationTarget(FunctionCall const& _arrayPop)
 	verificationTargetEncountered(&_arrayPop, VerificationTargetType::PopEmptyArray, symbArray->length() <= 0);
 }
 
+void CHC::makeOutOfBoundsVerificationTarget(IndexAccess const& _indexAccess)
+{
+	optional<smtutil::Expression> target;
+	auto baseType = _indexAccess.baseExpression().annotation().type;
+	if (smt::isArray(*baseType))
+	{
+		auto arrayVar = dynamic_pointer_cast<smt::SymbolicArrayVariable>(
+			m_context.expression(_indexAccess.baseExpression())
+		);
+		if (auto index = _indexAccess.indexExpression(); index)
+			target = expr(*index) < 0 || expr(*index) >= arrayVar->length();
+	}
+	// TODO FixedBytes
+
+	if (target)
+		verificationTargetEncountered(&_indexAccess, VerificationTargetType::OutOfBounds, *target);
+}
+
 pair<smtutil::Expression, smtutil::Expression> CHC::arithmeticOperation(
 	Token _op,
 	smtutil::Expression const& _left,
@@ -1404,6 +1422,12 @@ void CHC::checkVerificationTargets()
 			solAssert(dynamic_cast<FunctionCall const*>(target.errorNode), "");
 			errorType = "Empty array \"pop\"";
 			errorReporterId = 2529_error;
+		}
+		else if (target.type == VerificationTargetType::OutOfBounds)
+		{
+			solAssert(dynamic_cast<IndexAccess const*>(target.errorNode), "");
+			errorType = "Out of bounds access";
+			errorReporterId = 6368_error;
 		}
 		else if (
 			target.type == VerificationTargetType::Underflow ||
