@@ -7,4 +7,5 @@ contract C {
 	}
 }
 // ----
-// Warning 4281: (143-146): CHC: Division by zero happens here.\nCounterexample:\n\nx = [38, 38, 38, 38, 38, 38, 9, 38, 38, 38, 13]\ny = 0\n\nTransaction trace:\nC.constructor()\nC.f([38, 38, 38, 38, 38, 38, 9, 38, 38, 38, 13], 0)
+// Warning 4281: (143-146): CHC: Division by zero happens here.\nCounterexample:\n\nx = [13, 13, 13, 13, 13, 13, 9, 13, 38, 13, 13]\ny = 0\n\nTransaction trace:\nC.constructor()\nC.f([13, 13, 13, 13, 13, 13, 9, 13, 38, 13, 13], 0)
+// Warning 6368: (138-147): CHC: Out of bounds access happens here.\nCounterexample:\n\nx = [12, 12, 12, 12, 12, 12, 12, 12, 38, 12, 12]\ny = 2\n\nTransaction trace:\nC.constructor()\nC.f([12, 12, 12, 12, 12, 12, 12, 12, 38, 12, 12], 2)

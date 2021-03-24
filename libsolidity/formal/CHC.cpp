@@ -785,6 +785,9 @@ void CHC::makeArrayPopVerificationTarget(FunctionCall const& _arrayPop)
 
 void CHC::makeOutOfBoundsVerificationTarget(IndexAccess const& _indexAccess)
 {
+	if (_indexAccess.annotation().type->category() == Type::Category::TypeType)
+		return;
+
 	optional<smtutil::Expression> target;
 	auto baseType = _indexAccess.baseExpression().annotation().type;
 	if (smt::isArray(*baseType))
@@ -795,7 +798,11 @@ void CHC::makeOutOfBoundsVerificationTarget(IndexAccess const& _indexAccess)
 		if (auto index = _indexAccess.indexExpression(); index)
 			target = expr(*index) < 0 || expr(*index) >= arrayVar->length();
 	}
-	// TODO FixedBytes
+	else if (auto const* type = dynamic_cast<FixedBytesType const*>(baseType))
+	{
+		if (auto index = _indexAccess.indexExpression(); index)
+			target = expr(*index) < 0 || expr(*index) >= type->numBytes();
+	}
 
 	if (target)
 		verificationTargetEncountered(&_indexAccess, VerificationTargetType::OutOfBounds, *target);
