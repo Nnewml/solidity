@@ -26,7 +26,7 @@
 
 using namespace solidity;
 using namespace solidity::frontend;
-
+/*
 bool ASTCompareByID::operator()(ASTNode const* _lhs, ASTNode const* _rhs) const
 {
 	return _lhs->id() < _rhs->id();
@@ -39,3 +39,4 @@ bool ASTCompareByID::operator()(int64_t _lhs, ASTNode const* _rhs) const
 {
 	return _lhs < _rhs->id();
 }
+*/

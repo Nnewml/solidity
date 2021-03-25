@@ -65,7 +65,7 @@ class ASTConstVisitor;
 class ASTNode: private boost::noncopyable
 {
 public:
-	using CompareByID = frontend::ASTCompareByID;
+	using CompareByID = frontend::ASTCompareByID<ASTNode>;
 	using SourceLocation = langutil::SourceLocation;
 
 	explicit ASTNode(int64_t _id, SourceLocation _location);

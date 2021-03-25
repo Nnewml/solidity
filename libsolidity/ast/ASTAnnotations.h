@@ -168,7 +168,7 @@ struct ContractDefinitionAnnotation: TypeDeclarationAnnotation, StructurallyDocu
 
 	/// List of contracts whose bytecode is referenced by this contract, e.g. through "new".
 	/// The Value represents the ast node that referenced the contract
-	std::map<ContractDefinition const*, ASTNode const*, ASTCompareByID> contractDependencies;
+	std::map<ContractDefinition const*, ASTNode const*, ASTCompareByID<ContractDefinition>> contractDependencies;
 };
 
 struct CallableDeclarationAnnotation: DeclarationAnnotation
