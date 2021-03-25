@@ -151,8 +151,8 @@ restrictions highly readable.
             _;
         }
 
-        /// Make `_newOwner` the new owner of this
-        /// contract.
+        // Make `_newOwner` the new owner of this
+        // contract.
         function changeOwner(address _newOwner)
             public
             onlyBy(owner)
@@ -168,9 +168,9 @@ restrictions highly readable.
             _;
         }
 
-        /// Erase ownership information.
-        /// May only be called 6 weeks after
-        /// the contract has been created.
+        // Erase ownership information.
+        // May only be called 6 weeks after
+        // the contract has been created.
         function disown()
             public
             onlyBy(owner)
