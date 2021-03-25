@@ -13,12 +13,15 @@ contract LoopFor2 {
 		a = b;
 		require(n > 0 && n < 100);
 		uint i;
+		// Disabled because of Spacer nondeterminism.
+		/*
 		while (i < n) {
 			// Accesses are safe but oob is reported due to potential aliasing after c's assignment.
 			b[i] = i + 1;
 			c[i] = b[i];
 			++i;
 		}
+		*/
 		// Fails due to aliasing, since both b and c are
 		// memory references of same type.
 		// Removed because current Spacer seg faults in cex generation.
@@ -31,7 +34,4 @@ contract LoopFor2 {
 // ====
 // SMTSolvers: z3
 // ----
-// Warning 6368: (434-438): CHC: Out of bounds access happens here.
-// Warning 1218: (458-462): CHC: Error trying to invoke SMT solver.
-// Warning 6368: (458-462): CHC: Out of bounds access might happen here.
-// Warning 6368: (451-455): CHC: Out of bounds access happens here.
+// Warning 2072: (313-319): Unused local variable.

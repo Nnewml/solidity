@@ -5,11 +5,13 @@ contract C {
 	uint l;
 	function p() public {
 		require(a.length < type(uint).max - 1);
+		require(l < type(uint).max - 1);
 		a.push();
 		++l;
 	}
 	function q() public {
 		require(a.length > 0);
+		require(l > 0);
 		a.pop();
 		--l;
 	}
@@ -19,5 +21,3 @@ contract C {
 	}
 }
 // ----
-// Warning 4984: (145-148): CHC: Overflow (resulting value larger than 2**256 - 1) might happen here.
-// Warning 2661: (145-148): BMC: Overflow (resulting value larger than 2**256 - 1) happens here.
