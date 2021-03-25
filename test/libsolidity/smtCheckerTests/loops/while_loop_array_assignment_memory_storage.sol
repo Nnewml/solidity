@@ -32,6 +32,6 @@ contract LoopFor2 {
 // SMTSolvers: z3
 // ----
 // Warning 6368: (434-438): CHC: Out of bounds access happens here.
-// Warning 6368: (451-455): CHC: Out of bounds access happens here.
 // Warning 1218: (458-462): CHC: Error trying to invoke SMT solver.
 // Warning 6368: (458-462): CHC: Out of bounds access might happen here.
+// Warning 6368: (451-455): CHC: Out of bounds access happens here.
